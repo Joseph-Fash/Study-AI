@@ -140,3 +140,45 @@ textarea:focus {
   border-radius: 8px;
   border-left: 4px solid #4f46e5;
 }
+
+.quiz-progress {
+  color: #4f46e5;
+  font-weight: bold;
+  margin-bottom: 12px;
+}
+
+.question-text {
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-bottom: 16px;
+  line-height: 1.6;
+}
+
+#answerFeedback {
+  margin-top: 16px;
+  padding: 16px;
+  background: #f8fafc;
+  border-radius: 8px;
+  border-left: 4px solid #4f46e5;
+  line-height: 1.6;
+}
+
+#quizResults {
+  text-align: center;
+  padding: 20px;
+}
+
+#finalScore {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #4f46e5;
+  margin: 16px 0;
+}
+
+#weakAreas {
+  text-align: left;
+  margin-top: 20px;
+  padding: 16px;
+  background: #f8fafc;
+  border-radius: 8px;
+}

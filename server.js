@@ -1,6 +1,10 @@
 require("dotenv").config();
 const express = require("express");
-const { analyzeDocument, scoreFeynman } = require("./controllers/aiController");
+const {
+  analyzeDocument,
+  scoreFeynman,
+  scoreAnswer,
+} = require("./controllers/aiController");
 const multer = require("multer");
 const { extractText } = require("./utils/parseDoc");
 const app = express();
@@ -41,6 +45,16 @@ app.post('/feynman', async (req, res) => {
       res.json({ feedback: 'Could not score explanation😪: ' + err.message })
     }
 })
+
+app.post("/quiz-answer", async (req, res) => {
+  try {
+    const { question, answer, summary } = req.body;
+    const result = await scoreAnswer(question, answer, summary);
+    res.json(result);
+  } catch (err) {
+    res.json({ score: 0, verdict: "Error", explanation: err.message });
+  }
+});
 
 app.listen(PORT, () => {
   console.log(`Server started on http://localhost:${PORT}`);

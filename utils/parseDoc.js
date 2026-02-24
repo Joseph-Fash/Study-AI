@@ -25,6 +25,14 @@ async function extractText(filePath, mimeType) {
     return result.value;
   }
 
+  if (
+    mimeType === "image/jpeg" ||
+    mimeType === "image/jpg" ||
+    mimeType === "image/png"
+  ) {
+    return "IMAGE:" + filePath;
+  }
+
   return null;
 }
 
