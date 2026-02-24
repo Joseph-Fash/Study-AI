@@ -22,24 +22,59 @@ const auth = getAuth(app);
 const loginSection = document.getElementById("loginSection");
 const appSection = document.getElementById("appSection");
 const authError = document.getElementById("authError");
+const authTitle = document.getElementById("authTitle");
+const submitAuthBtn = document.getElementById("submitAuthBtn");
+const toggleAuthBtn = document.getElementById("toggleAuthBtn");
+const toggleText = document.getElementById("toggleText");
 
-document.getElementById("loginBtn").addEventListener("click", async () => {
-  const email = document.getElementById("authEmail").value.trim();
-  const password = document.getElementById("authPassword").value.trim();
-  try {
-    await signInWithEmailAndPassword(auth, email, password);
-  } catch (err) {
-    authError.textContent = err.message;
+let isLoginMode = true;
+
+toggleAuthBtn.addEventListener("click", () => {
+  isLoginMode = !isLoginMode;
+  if (isLoginMode) {
+    authTitle.textContent = "Welcome back";
+    submitAuthBtn.textContent = "Log In";
+    toggleText.textContent = "Don't have an account?";
+    toggleAuthBtn.textContent = "Sign Up";
+  } else {
+    authTitle.textContent = "Create an account";
+    submitAuthBtn.textContent = "Sign Up";
+    toggleText.textContent = "Already have an account?";
+    toggleAuthBtn.textContent = "Log In";
   }
+  authError.textContent = "";
 });
 
-document.getElementById("signupBtn").addEventListener("click", async () => {
+submitAuthBtn.addEventListener("click", async () => {
   const email = document.getElementById("authEmail").value.trim();
   const password = document.getElementById("authPassword").value.trim();
+
+  if (!email || !password) {
+    authError.textContent = "Please enter your email and password.";
+    return;
+  }
+
   try {
-    await createUserWithEmailAndPassword(auth, email, password);
+    if (isLoginMode) {
+      await signInWithEmailAndPassword(auth, email, password);
+    } else {
+      await createUserWithEmailAndPassword(auth, email, password);
+    }
   } catch (err) {
-    authError.textContent = err.message;
+    if (
+      err.code === "auth/user-not-found" ||
+      err.code === "auth/wrong-password" ||
+      err.code === "auth/invalid-credential"
+    ) {
+      authError.textContent = "Incorrect email or password.";
+    } else if (err.code === "auth/email-already-in-use") {
+      authError.textContent =
+        "This email is already registered. Try logging in.";
+    } else if (err.code === "auth/weak-password") {
+      authError.textContent = "Password must be at least 6 characters.";
+    } else {
+      authError.textContent = err.message;
+    }
   }
 });
 
@@ -48,14 +83,11 @@ document.getElementById("logoutBtn").addEventListener("click", async () => {
 });
 
 onAuthStateChanged(auth, (user) => {
-  console.log("Auth state changed, user:", user);
   if (user) {
-    console.log("Showing app section");
     loginSection.classList.add("hidden");
     appSection.classList.remove("hidden");
     document.getElementById("userEmail").textContent = user.email;
   } else {
-    console.log("Showing login section");
     loginSection.classList.remove("hidden");
     appSection.classList.add("hidden");
   }

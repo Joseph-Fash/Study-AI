@@ -8,19 +8,20 @@
   </head>
   <body>
     <div id="loginSection" class="auth-container">
-      <h1>DocuMind</h1>
-      <p class="subtitle">AI-powered study assistant</p>
-      <div class="auth-box">
-        <input type="email" id="authEmail" placeholder="Email address" />
-        <input type="password" id="authPassword" placeholder="Password" />
-        <div class="auth-buttons">
-          <button id="loginBtn">Log In</button>
-          <button id="signupBtn" class="secondary-btn">Sign Up</button>
-        </div>
-        <p id="authError" class="error-text"></p>
-      </div>
-    </div>
-
+  <h1>DocuMind</h1>
+  <p class="subtitle">AI-powered study assistant</p>
+  <div class="auth-box">
+    <h2 id="authTitle">Welcome back</h2>
+    <input type="email" id="authEmail" placeholder="Email address" />
+    <input type="password" id="authPassword" placeholder="Password" />
+    <button id="submitAuthBtn">Log In</button>
+    <p id="authError" class="error-text"></p>
+    <p class="toggle-text">
+      <span id="toggleText">Don't have an account?</span>
+      <button id="toggleAuthBtn" class="link-btn">Sign Up</button>
+    </p>
+  </div>
+</div>
     <div id="appSection" class="hidden">
       <nav class="navbar">
         <span class="nav-brand">DocuMind</span>
