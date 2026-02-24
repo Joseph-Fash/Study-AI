@@ -3,16 +3,53 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="style.css">
   <title>StudyAI</title>
 </head>
 <body>
-  <h1>Welcome to StudyAI</h1>
-  <p>Upload a document to get started</p>
+  <div class="container">
+    <h1>StudyAI</h1>
+    <p class="subtitle">Upload a document to get started</p>
 
-  <input type="file" id="fileInput" accept="".pdf,.docx />
-  <button id="uploadBtn">Upload</button>
+    <div class="upload-section">
+      <input type="file" id="fileInput" accept=".pdf,.docx" />
+      <button id="uploadBtn">Analyze Document</button>
+    </div>
 
-  <div id="result"></div>
+    <div id="loader" class="hidden">Analyzing your document...</div>
+
+    <div id="resultSection" class="hidden">
+      <div class="tabs">
+        <button class="tab-btn active" data-tab="summary">Summary</button>
+        <button class="tab-btn" data-tab="bullets">Key Points</button>
+        <button class="tab-btn" data-tab="questions">Study Questions</button>
+        <button class="tab-btn" data-tab="feynman">Feynman Test</button>
+      </div>
+
+      <div id="summary" class="tab-content active">
+        <h2>Summary</h2>
+        <p id="summaryText"></p>
+      </div>
+
+      <div id="bullets" class="tab-content hidden">
+        <h2>Key Points</h2>
+        <ul id="bulletsList"></ul>
+      </div>
+
+      <div id="questions" class="tab-content hidden">
+        <h2>Study Questions</h2>
+        <ol id="questionsList"></ol>
+      </div>
+
+      <div id="feynman" class="tab-content hidden">
+        <h2>Feynman Test</h2>
+        <p class="feunman-prompt">Explain what you just read in your own words, as  if you're teaching someone who knows nothing about this topic.😎</p>
+        <textarea id="feynmanInput" placeholder="start typing your explanation here..🤭"></textarea>
+        <button id="feynmanBtn">Submit for Scoringgggg 😆</button>
+        <div id="feynmanResult"></div>
+      </div>
+    </div>
+  </div>
 
   <script src="app.js"></script>
 </body>
