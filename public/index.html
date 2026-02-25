@@ -23,23 +23,26 @@
   </div>
 </div>
     <div id="appSection" class="hidden">
-      <nav class="navbar">
-        <span class="nav-brand">DocuMind</span>
-        <div class="nav-right">
-          <span id="userEmail" class="user-email"></span>
-          <button id="logoutBtn" class="logout-btn">Log Out</button>
-        </div>
-      </nav>
+  <nav class="navbar">
+    <span class="nav-brand">DocuMind</span>
+    <div class="nav-right">
+      <span id="userEmail" class="user-email"></span>
+      <button id="logoutBtn" class="logout-btn">Log Out</button>
+    </div>
+  </nav>
 
+  <div class="app-layout">
+    <aside class="sidebar">
+      <h3>Study History</h3>
+      <div id="historyList"></div>
+    </aside>
+
+    <main class="main-content">
       <div class="container">
         <p class="subtitle">Upload a document to get started</p>
 
         <div class="upload-section">
-          <input
-            type="file"
-            id="fileInput"
-            accept=".pdf,.docx,.jpg,.jpeg,.png"
-          />
+          <input type="file" id="fileInput" accept=".pdf,.docx,.jpg,.jpeg,.png" />
           <button id="uploadBtn">Analyze Document</button>
         </div>
 
@@ -49,9 +52,7 @@
           <div class="tabs">
             <button class="tab-btn active" data-tab="summary">Summary</button>
             <button class="tab-btn" data-tab="bullets">Key Points</button>
-            <button class="tab-btn" data-tab="questions">
-              Study Questions
-            </button>
+            <button class="tab-btn" data-tab="questions">Study Questions</button>
             <button class="tab-btn" data-tab="quiz">Quiz Mode</button>
             <button class="tab-btn" data-tab="feynman">Feynman Test</button>
           </div>
@@ -74,19 +75,13 @@
           <div id="quiz" class="tab-content hidden">
             <h2>Quiz Mode</h2>
             <div id="quizStart">
-              <p>
-                Test yourself on this document. You'll be given one question at
-                a time and scored on each answer.
-              </p>
+              <p>Test yourself on this document. You'll be given one question at a time and scored on each answer.</p>
               <button id="startQuizBtn">Start Quiz</button>
             </div>
             <div id="quizQuestion" class="hidden">
               <p id="quizProgress" class="quiz-progress"></p>
               <p id="questionText" class="question-text"></p>
-              <textarea
-                id="quizAnswer"
-                placeholder="Type your answer here..."
-              ></textarea>
+              <textarea id="quizAnswer" placeholder="Type your answer here..."></textarea>
               <button id="submitAnswerBtn">Submit Answer</button>
               <div id="answerFeedback" class="hidden"></div>
               <button id="nextQuestionBtn" class="hidden">Next Question</button>
@@ -101,22 +96,18 @@
 
           <div id="feynman" class="tab-content hidden">
             <h2>Feynman Test</h2>
-            <p class="feynman-prompt">
-              Explain what you just read in your own words, as if you're
-              teaching someone who knows nothing about this topic. 😎
-            </p>
-            <textarea
-              id="feynmanInput"
-              placeholder="Start typing your explanation here.. 🤭"
-            ></textarea>
+            <p class="feynman-prompt">Explain what you just read in your own words, as if you're teaching someone who knows nothing about this topic. 😎</p>
+            <textarea id="feynmanInput" placeholder="Start typing your explanation here.. 🤭"></textarea>
             <button id="feynmanBtn">Submit for Scoring 😆</button>
             <div id="feynmanResult"></div>
           </div>
         </div>
       </div>
-    </div>
+    </main>
+  </div>
+</div>
 
-    <script type="module" src="auth.js"></script>
+<script type="module" src="auth.js"></script>
     <script type="module" src="app.js"></script>
   </body>
 </html>

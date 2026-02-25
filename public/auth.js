@@ -6,6 +6,16 @@ import {
   signOut,
   onAuthStateChanged,
 } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+import {
+  getFirestore,
+  collection,
+  addDoc,
+  getDocs,
+  query,
+  where,
+  orderBy,
+  serverTimestamp,
+} from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
 const firebaseConfig = {
   apiKey: "AIzaSyAOgRapTpaWmuT0PQsRJxvTfYLYvXIFywA",
@@ -18,6 +28,7 @@ const firebaseConfig = {
 
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
+const db = getFirestore(app);
 
 const loginSection = document.getElementById("loginSection");
 const appSection = document.getElementById("appSection");
@@ -28,6 +39,7 @@ const toggleAuthBtn = document.getElementById("toggleAuthBtn");
 const toggleText = document.getElementById("toggleText");
 
 let isLoginMode = true;
+let currentUser = null;
 
 toggleAuthBtn.addEventListener("click", () => {
   isLoginMode = !isLoginMode;
@@ -83,12 +95,81 @@ document.getElementById("logoutBtn").addEventListener("click", async () => {
 });
 
 onAuthStateChanged(auth, (user) => {
+  currentUser = user;
   if (user) {
     loginSection.classList.add("hidden");
     appSection.classList.remove("hidden");
     document.getElementById("userEmail").textContent = user.email;
+    loadStudyHistory();
   } else {
     loginSection.classList.remove("hidden");
     appSection.classList.add("hidden");
   }
 });
+
+async function saveStudySession(fileName, summary, bullets, questions) {
+  if (!currentUser) return;
+  try {
+    await addDoc(collection(db, "sessions"), {
+      userId: currentUser.uid,
+      fileName,
+      summary,
+      bullets,
+      questions,
+      createdAt: serverTimestamp(),
+    });
+    loadStudyHistory();
+  } catch (err) {
+    console.error("Error saving session:", err);
+  }
+}
+
+async function loadStudyHistory() {
+  if (!currentUser) return;
+  try {
+    const q = query(
+      collection(db, "sessions"),
+      where("userId", "==", currentUser.uid),
+      orderBy("createdAt", "desc"),
+    );
+    const snapshot = await getDocs(q);
+    const historyList = document.getElementById("historyList");
+    if (!historyList) return;
+
+    if (snapshot.empty) {
+      historyList.innerHTML =
+        "<p class='no-history'>No study sessions yet.</p>";
+      return;
+    }
+
+    historyList.innerHTML = snapshot.docs
+      .map((doc) => {
+        const data = doc.data();
+        return `
+        <div class="history-item" 
+          data-summary="${encodeURIComponent(data.summary)}"
+          data-bullets="${encodeURIComponent(JSON.stringify(data.bullets))}"
+          data-questions="${encodeURIComponent(JSON.stringify(data.questions))}"
+          data-filename="${encodeURIComponent(data.fileName)}">
+          <span class="history-filename">${data.fileName}</span>
+          <span class="history-date">${data.createdAt ? new Date(data.createdAt.toDate()).toLocaleDateString() : "Just now"}</span>
+        </div>
+      `;
+      })
+      .join("");
+
+    document.querySelectorAll(".history-item").forEach((item) => {
+      item.addEventListener("click", () => {
+        const summary = decodeURIComponent(item.dataset.summary);
+        const bullets = JSON.parse(decodeURIComponent(item.dataset.bullets));
+        const questions = JSON.parse(
+          decodeURIComponent(item.dataset.questions),
+        );
+        window.loadSession(summary, bullets, questions);
+      });
+    });
+  } catch (err) {
+    console.error("Error loading history:", err);
+  }
+}
+window.saveStudySession = saveStudySession;

@@ -33,6 +33,12 @@ uploadBtn.addEventListener("click", () => {
       }
 
       document.getElementById("summaryText").textContent = data.summary;
+      window.saveStudySession(
+        fileInput.files[0].name,
+        data.summary,
+        data.bullets,
+        data.questions,
+      );
 
       const bulletsList = document.getElementById("bulletsList");
       bulletsList.innerHTML = data.bullets.map((b) => `<li>${b}</li>`).join("");
@@ -192,6 +198,32 @@ function showQuizResults() {
     weakAreas.innerHTML = "<strong>Excellent! No weak areas detected.</strong>";
   }
 }
+
+window.loadSession = function (summary, bullets, questions) {
+  document.getElementById("summaryText").textContent = summary;
+  document.getElementById("bulletsList").innerHTML = bullets
+    .map((b) => `<li>${b}</li>`)
+    .join("");
+  document.getElementById("questionsList").innerHTML = questions
+    .map((q) => `<li>${q}</li>`)
+    .join("");
+
+  documentText = summary;
+  quizQuestions = questions;
+
+  document.getElementById("resultSection").classList.remove("hidden");
+
+  document
+    .querySelectorAll(".tab-btn")
+    .forEach((b) => b.classList.remove("active"));
+  document
+    .querySelectorAll(".tab-content")
+    .forEach((c) => c.classList.add("hidden"));
+  document.querySelector('[data-tab="summary"]').classList.add("active");
+  document.getElementById("summary").classList.remove("hidden");
+
+  window.scrollTo(0, 0);
+};
 
 document.getElementById("retakeQuizBtn").addEventListener("click", () => {
   document.getElementById("quizResults").classList.add("hidden");
