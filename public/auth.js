@@ -168,8 +168,26 @@ async function loadStudyHistory() {
         window.loadSession(summary, bullets, questions);
       });
     });
+
+    document.querySelectorAll(".history-item").forEach((item) => {
+      item.addEventListener("click", () => {
+        const summary = decodeURIComponent(item.dataset.summary);
+        const bullets = JSON.parse(decodeURIComponent(item.dataset.bullets));
+        const questions = JSON.parse(
+          decodeURIComponent(item.dataset.questions),
+        );
+        window.loadSession(summary, bullets, questions);
+
+        // Close sidebar on mobile
+        const sidebar = document.querySelector(".sidebar");
+        const overlay = document.getElementById("sidebarOverlay");
+        if (sidebar) sidebar.classList.remove("open");
+        if (overlay) overlay.classList.remove("active");
+      });
+    });
   } catch (err) {
     console.error("Error loading history:", err);
   }
 }
+
 window.saveStudySession = saveStudySession;
