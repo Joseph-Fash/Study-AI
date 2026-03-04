@@ -8,111 +8,151 @@
   </head>
   <body>
     <div id="loginSection" class="auth-container">
-  <h1>DocuMind</h1>
-  <p class="subtitle">AI-powered study assistant</p>
-  <div class="auth-box">
-    <h2 id="authTitle">Welcome back</h2>
-    <input type="email" id="authEmail" placeholder="Email address" />
-    <input type="password" id="authPassword" placeholder="Password" />
-    <button id="submitAuthBtn">Log In</button>
-    <p id="authError" class="error-text"></p>
-    <p class="toggle-text">
-      <span id="toggleText">Don't have an account?</span>
-      <button id="toggleAuthBtn" class="link-btn">Sign Up</button>
-    </p>
-  </div>
-</div>
-    <div id="appSection" class="hidden">
-  <nav class="navbar">
-  <div class="nav-left">
-    <button id="menuBtn" class="menu-btn">&#9776;</button>
-    <span class="nav-brand">DocuMind</span>
-  </div>
-  <div class="nav-right">
-    <span id="userEmail" class="user-email"></span>
-    <button id="logoutBtn" class="logout-btn">Log Out</button>
-  </div>
-</nav>
-
-<div id="sidebarOverlay" class="sidebar-overlay"></div>
-
-  <div class="app-layout">
-    <aside class="sidebar">
-      <h3>Study History</h3>
-      <div id="historyList"></div>
-    </aside>
-
-    <main class="main-content">
-      <div class="container">
-        <p class="subtitle">Upload a document to get started</p>
-
-        <div class="upload-section">
-          <input type="file" id="fileInput" accept=".pdf,.docx,.jpg,.jpeg,.png" />
-          <button id="uploadBtn">Analyze Document</button>
-        </div>
-
-        <div id="loader" class="hidden">Analyzing your document...</div>
-
-        <div id="resultSection" class="hidden">
-          <div class="tabs">
-            <button class="tab-btn active" data-tab="summary">Summary</button>
-            <button class="tab-btn" data-tab="bullets">Key Points</button>
-            <button class="tab-btn" data-tab="questions">Study Questions</button>
-            <button class="tab-btn" data-tab="quiz">Quiz Mode</button>
-            <button class="tab-btn" data-tab="feynman">Feynman Test</button>
-          </div>
-
-          <div id="summary" class="tab-content active">
-            <h2>Summary</h2>
-            <p id="summaryText"></p>
-          </div>
-
-          <div id="bullets" class="tab-content hidden">
-            <h2>Key Points</h2>
-            <ul id="bulletsList"></ul>
-          </div>
-
-          <div id="questions" class="tab-content hidden">
-            <h2>Study Questions</h2>
-            <ol id="questionsList"></ol>
-          </div>
-
-          <div id="quiz" class="tab-content hidden">
-            <h2>Quiz Mode</h2>
-            <div id="quizStart">
-              <p>Test yourself on this document. You'll be given one question at a time and scored on each answer.</p>
-              <button id="startQuizBtn">Start Quiz</button>
-            </div>
-            <div id="quizQuestion" class="hidden">
-              <p id="quizProgress" class="quiz-progress"></p>
-              <p id="questionText" class="question-text"></p>
-              <textarea id="quizAnswer" placeholder="Type your answer here..."></textarea>
-              <button id="submitAnswerBtn">Submit Answer</button>
-              <div id="answerFeedback" class="hidden"></div>
-              <button id="nextQuestionBtn" class="hidden">Next Question</button>
-            </div>
-            <div id="quizResults" class="hidden">
-              <h3>Quiz Complete!</h3>
-              <p id="finalScore"></p>
-              <div id="weakAreas"></div>
-              <button id="retakeQuizBtn">Retake Quiz</button>
-            </div>
-          </div>
-
-          <div id="feynman" class="tab-content hidden">
-            <h2>Feynman Test</h2>
-            <p class="feynman-prompt">Explain what you just read in your own words, as if you're teaching someone who knows nothing about this topic. 😎</p>
-            <textarea id="feynmanInput" placeholder="Start typing your explanation here.. 🤭"></textarea>
-            <button id="feynmanBtn">Submit for Scoring 😆</button>
-            <div id="feynmanResult"></div>
-          </div>
-        </div>
+      <h1>DocuMind</h1>
+      <p class="subtitle">AI-powered study assistant</p>
+      <div class="auth-box">
+        <h2 id="authTitle">Welcome back</h2>
+        <input type="email" id="authEmail" placeholder="Email address" />
+        <input type="password" id="authPassword" placeholder="Password" />
+        <button id="submitAuthBtn">Log In</button>
+        <p id="authError" class="error-text"></p>
+        <p class="toggle-text">
+          <span id="toggleText">Don't have an account?</span>
+          <button id="toggleAuthBtn" class="link-btn">Sign Up</button>
+        </p>
       </div>
-    </main>
-  </div>
-</div>
+    </div>
+    <div id="appSection" class="hidden">
+      <nav class="navbar">
+        <div class="nav-left">
+          <button id="menuBtn" class="menu-btn">&#9776;</button>
+          <span class="nav-brand">DocuMind</span>
+        </div>
+        <div class="nav-right">
+          <span id="userEmail" class="user-email"></span>
+          <button id="logoutBtn" class="logout-btn">Log Out</button>
+        </div>
+      </nav>
 
-<script type="module" src="auth.js"></script>
+      <div id="sidebarOverlay" class="sidebar-overlay"></div>
+
+      <div class="app-layout">
+        <aside class="sidebar">
+          <h3>Study History</h3>
+          <div id="historyList"></div>
+        </aside>
+
+        <main class="main-content">
+          <div class="container">
+            <p class="subtitle">Upload a document to get started</p>
+
+            <div class="upload-section">
+              <input
+                type="file"
+                id="fileInput"
+                accept=".pdf,.docx,.jpg,.jpeg,.png"
+              />
+              <button id="uploadBtn">Analyze Document</button>
+            </div>
+
+            <div id="loader" class="hidden">Analyzing your document...</div>
+
+            <div id="resultSection" class="hidden">
+              <div class="tabs">
+                <button class="tab-btn active" data-tab="summary">
+                  Summary
+                </button>
+                <button class="tab-btn" data-tab="bullets">Key Points</button>
+                <button class="tab-btn" data-tab="questions">
+                  Study Questions
+                </button>
+                <button class="tab-btn" data-tab="quiz">Quiz Mode</button>
+                <button class="tab-btn" data-tab="askdoc">Ask the Doc</button>
+                <button class="tab-btn" data-tab="feynman">Feynman Test</button>
+              </div>
+
+              <div id="summary" class="tab-content active">
+                <h2>Summary</h2>
+                <p id="summaryText"></p>
+              </div>
+
+              <div id="bullets" class="tab-content hidden">
+                <h2>Key Points</h2>
+                <ul id="bulletsList"></ul>
+              </div>
+
+              <div id="questions" class="tab-content hidden">
+                <h2>Study Questions</h2>
+                <ol id="questionsList"></ol>
+              </div>
+
+              <div id="quiz" class="tab-content hidden">
+                <h2>Quiz Mode</h2>
+                <div id="quizStart">
+                  <p>
+                    Test yourself on this document. You'll be given one question
+                    at a time and scored on each answer.
+                  </p>
+                  <button id="startQuizBtn">Start Quiz</button>
+                </div>
+                <div id="quizQuestion" class="hidden">
+                  <p id="quizProgress" class="quiz-progress"></p>
+                  <p id="questionText" class="question-text"></p>
+                  <textarea
+                    id="quizAnswer"
+                    placeholder="Type your answer here..."
+                  ></textarea>
+                  <button id="submitAnswerBtn">Submit Answer</button>
+                  <div id="answerFeedback" class="hidden"></div>
+                  <button id="nextQuestionBtn" class="hidden">
+                    Next Question
+                  </button>
+                </div>
+                <div id="quizResults" class="hidden">
+                  <h3>Quiz Complete!</h3>
+                  <p id="finalScore"></p>
+                  <div id="weakAreas"></div>
+                  <button id="retakeQuizBtn">Retake Quiz</button>
+                </div>
+              </div>
+
+              <div id="askdoc" class="tab-content hidden">
+                <h2>Ask the Doc</h2>
+                <p class="feynman-prompt">
+                  Type any question about this document and get an instant
+                  answer.
+                </p>
+                <div id="chatHistory" class="chat-history"></div>
+                <div class="chat-input-row">
+                  <input
+                    type="text"
+                    id="askInput"
+                    placeholder="Ask anything about this document..."
+                  />
+                  <button id="askBtn">Ask</button>
+                </div>
+              </div>
+
+              <div id="feynman" class="tab-content hidden">
+                <h2>Feynman Test</h2>
+                <p class="feynman-prompt">
+                  Explain what you just read in your own words, as if you're
+                  teaching someone who knows nothing about this topic. 😎
+                </p>
+                <textarea
+                  id="feynmanInput"
+                  placeholder="Start typing your explanation here.. 🤭"
+                ></textarea>
+                <button id="feynmanBtn">Submit for Scoring 😆</button>
+                <div id="feynmanResult"></div>
+              </div>
+            </div>
+          </div>
+        </main>
+      </div>
+    </div>
+
+    <script type="module" src="auth.js"></script>
     <script type="module" src="app.js"></script>
   </body>
 </html>

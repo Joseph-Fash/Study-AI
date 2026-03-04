@@ -821,6 +821,8 @@ textarea:focus {
     font-size: 0.82rem;
   }
 
+
+
   /* Feynman special tab */
 .tab-btn[data-tab="feynman"] {
   background: linear-gradient(135deg, #ff4f84, #ff8c42);
@@ -876,4 +878,89 @@ textarea:focus {
 
   .auth-box { padding: 24px 20px; }
   .auth-container::before { display: none; }
+
+  .tab-btn[data-tab="askdoc"] {
+  grid-column: 1 / -1;
+}
+}
+
+.chat-history {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  margin-bottom: 20px;
+  max-height: 400px;
+  overflow-y: auto;
+  padding-right: 4px;
+}
+
+.chat-bubble {
+  padding: 14px 18px;
+  border-radius: var(--radius-md);
+  font-size: 0.93rem;
+  line-height: 1.7;
+  max-width: 85%;
+}
+
+.chat-bubble.user {
+  background: var(--primary);
+  color: white;
+  align-self: flex-end;
+  border-bottom-right-radius: 4px;
+}
+
+.chat-bubble.ai {
+  background: var(--ground);
+  color: var(--ink-soft);
+  align-self: flex-start;
+  border: 1px solid var(--border);
+  border-bottom-left-radius: 4px;
+}
+
+.chat-bubble.thinking {
+  background: var(--ground);
+  color: var(--ink-muted);
+  align-self: flex-start;
+  font-style: italic;
+  animation: pulse 1.5s ease-in-out infinite;
+}
+
+.chat-input-row {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.chat-input-row input {
+  flex: 1;
+  padding: 13px 16px;
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius-sm);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.95rem;
+  color: var(--ink);
+  background: var(--ground);
+  outline: none;
+  transition: border-color var(--transition), box-shadow var(--transition);
+}
+
+.chat-input-row input:focus {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(91,79,255,0.1);
+  background: var(--surface);
+}
+
+#askBtn {
+  padding: 13px 24px;
+  background: var(--primary);
+  color: white;
+  border-radius: var(--radius-sm);
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+#askBtn:hover {
+  background: var(--primary-dk);
+  transform: translateY(-1px);
+  box-shadow: 0 6px 20px rgba(91,79,255,0.3);
 }

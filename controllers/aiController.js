@@ -104,4 +104,22 @@ async function scoreAnswer(question, answer, summary) {
   return JSON.parse(cleaned);
 }
 
-module.exports = { analyzeDocument, scoreFeynman, scoreAnswer };
+async function askDocument(question, documentText) {
+  const response = await client.chat.completions.create({
+    model: "llama-3.3-70b-versatile",
+    messages: [
+      {
+        role: "system",
+        content:
+          "You are a helpful study assistant. Answer the student's question based only on the document provided. Keep answers clear, simple and direct. If the answer is not in the document, say so honestly.",
+      },
+      {
+        role: "user",
+        content: `Document:\n\n${documentText.slice(0, 12000)}\n\nQuestion: ${question}`,
+      },
+    ],
+  });
+  return response.choices[0].message.content;
+}
+
+module.exports = { analyzeDocument, scoreFeynman, scoreAnswer, askDocument };

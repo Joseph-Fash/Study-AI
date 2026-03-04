@@ -4,6 +4,7 @@ const {
   analyzeDocument,
   scoreFeynman,
   scoreAnswer,
+  askDocument,
 } = require("./controllers/aiController");
 const multer = require("multer");
 const { extractText } = require("./utils/parseDoc");
@@ -53,6 +54,16 @@ app.post("/quiz-answer", async (req, res) => {
     res.json(result);
   } catch (err) {
     res.json({ score: 0, verdict: "Error", explanation: err.message });
+  }
+});
+
+app.post("/ask", async (req, res) => {
+  try {
+    const { question, documentText } = req.body;
+    const answer = await askDocument(question, documentText);
+    res.json({ answer });
+  } catch (err) {
+    res.json({ answer: "Could not answer: " + err.message });
   }
 });
 

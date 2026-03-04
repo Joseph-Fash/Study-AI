@@ -241,6 +241,56 @@ if (menuBtn) {
   });
 }
 
+const askBtn = document.getElementById("askBtn");
+const askInput = document.getElementById("askInput");
+
+askBtn.addEventListener("click", () => {
+  const question = askInput.value.trim();
+  if (!question) return;
+  if (!documentText) {
+    alert("Please upload a document first.");
+    return;
+  }
+
+  const chatHistory = document.getElementById("chatHistory");
+
+  // Add user bubble
+  const userBubble = document.createElement("div");
+  userBubble.className = "chat-bubble user";
+  userBubble.textContent = question;
+  chatHistory.appendChild(userBubble);
+
+  // Add thinking bubble
+  const thinkingBubble = document.createElement("div");
+  thinkingBubble.className = "chat-bubble thinking";
+  thinkingBubble.textContent = "Thinking...";
+  chatHistory.appendChild(thinkingBubble);
+
+  askInput.value = "";
+  chatHistory.scrollTop = chatHistory.scrollHeight;
+
+  fetch("/ask", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ question, documentText }),
+  })
+    .then((res) => res.json())
+    .then((data) => {
+      thinkingBubble.className = "chat-bubble ai";
+      thinkingBubble.textContent = data.answer;
+      chatHistory.scrollTop = chatHistory.scrollHeight;
+    })
+    .catch((err) => {
+      thinkingBubble.className = "chat-bubble ai";
+      thinkingBubble.textContent = "Something went wrong.";
+      console.error(err);
+    });
+});
+
+askInput.addEventListener("keydown", (e) => {
+  if (e.key === "Enter") askBtn.click();
+});
+
 
 document.getElementById("retakeQuizBtn").addEventListener("click", () => {
   document.getElementById("quizResults").classList.add("hidden");
