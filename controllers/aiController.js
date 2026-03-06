@@ -1,7 +1,6 @@
-const fs = require('fs')
+const fs = require("fs");
 require("dotenv").config();
 const Groq = require("groq-sdk");
-
 
 const client = new Groq({
   apiKey: process.env.GROQ_API_KEY,
@@ -91,7 +90,7 @@ async function scoreAnswer(question, answer, summary) {
       {
         role: "system",
         content:
-          "You are a friendly study coach grading a student answer. Given a question, the student answer, and the document summary, give: a score out of 10, a simple one-sentence verdict (correct, partially correct, or incorrect), and a brief simple explanation of the correct answer. Keep language simple and encouraging. Return as JSON with fields: score, verdict, explanation.",
+          'You are a friendly study coach grading a student\'s quiz answer. Talk directly to the student using "you" — never refer to them in third person as "the student". Be encouraging but honest. Return JSON with score (0-10), verdict (one short line), and explanation (2-3 sentences talking directly to the student).',
       },
       {
         role: "user",
